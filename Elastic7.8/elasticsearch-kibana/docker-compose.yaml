@@ -1,0 +1,23 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment: 
+      - "discovery.type=single-node"
+    volumes:
+      - D:\My_Work\Docker_Container\Shared_Disk\elasticsearch7.8\:/usr/share/elasticsearch/data
+    extra_hosts:
+      - "elasticsearch kibana:192.168.43.145"
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.8.0
+    ports:
+      - "5601:5601"
+    environment: 
+      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
+    extra_hosts:
+      - "elasticsearch kibana:192.168.43.145"
+    depends_on: 
+      - elasticsearch
